@@ -1,4 +1,5 @@
 
+using JWT.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,7 @@ namespace JWT
 
             // Add services to the container.
             builder.Services.Configure<helper.JWT>(builder.Configuration.GetSection("JWT"));
+            builder.Services.AddScoped<IAuthService,AuthService>();
             builder.Services.AddIdentity<models.Applicationuser, IdentityRole>()
                 .AddEntityFrameworkStores<models.ApplicationDbcontext>();
 
@@ -48,7 +50,7 @@ namespace JWT
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
