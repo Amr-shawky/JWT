@@ -1,20 +1,11 @@
-﻿using JWT.helper;
-using JWT.models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+﻿using JWT.models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
+
 
 
 namespace JWT.Services
@@ -24,9 +15,10 @@ namespace JWT.Services
         private readonly UserManager<Applicationuser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly helper.JWT _jwt;
-        public AuthService(UserManager<Applicationuser> userManager)
+        public AuthService(UserManager<Applicationuser> userManager , IOptions<helper.JWT> jwt)
         {
             _userManager = userManager;
+            _jwt = jwt.Value;
         }
         public async Task<AuthModel> RegisterAsync(RegisterModel model)
         {
@@ -150,7 +142,6 @@ namespace JWT.Services
 
             return jwtSecurityToken;
         }
-    
     }
 }
 
